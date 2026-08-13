@@ -54,10 +54,11 @@ cd ios && pod install && cd ..
 ### 🤖 Android Setup
 
 1. **Permissions:**
-   The `INTERNET` and `ACCESS_NETWORK_STATE` permissions are included automatically via Android Manifest merging:
+   The `INTERNET`, `ACCESS_NETWORK_STATE`, and `AD_ID` permissions are included automatically via Android Manifest merging:
    ```xml
    <uses-permission android:name="android.permission.INTERNET" />
    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+   <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
    ```
 
 2. **JitPack Repository:**

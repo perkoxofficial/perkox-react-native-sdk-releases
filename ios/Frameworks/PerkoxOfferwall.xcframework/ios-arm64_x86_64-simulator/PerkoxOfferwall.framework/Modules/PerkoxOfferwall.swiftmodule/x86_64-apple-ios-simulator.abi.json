@@ -34,6 +34,20 @@
       },
       {
         "kind": "Import",
+        "name": "AdSupport",
+        "printedName": "AdSupport",
+        "declKind": "Import",
+        "moduleName": "PerkoxOfferwall"
+      },
+      {
+        "kind": "Import",
+        "name": "AppTrackingTransparency",
+        "printedName": "AppTrackingTransparency",
+        "declKind": "Import",
+        "moduleName": "PerkoxOfferwall"
+      },
+      {
+        "kind": "Import",
         "name": "UIKit",
         "printedName": "UIKit",
         "declKind": "Import",
@@ -897,9 +911,9 @@
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/DeviceInfoHelper.swift",
       "kind": "StringLiteral",
-      "offset": 141,
+      "offset": 189,
       "length": 7,
-      "value": "\"1.0.5\""
+      "value": "\"2.0.0\""
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/Offerwall.swift",
