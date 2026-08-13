@@ -1,23 +1,28 @@
-# @perkoxofficial/react-native-sdk
+# Perkox Offerwall SDK for React Native
 
 [![npm version](https://img.shields.io/npm/v/@perkoxofficial/react-native-sdk.svg?style=flat-square)](https://www.npmjs.com/package/@perkoxofficial/react-native-sdk)
 [![license](https://img.shields.io/npm/l/@perkoxofficial/react-native-sdk.svg?style=flat-square)](https://www.npmjs.com/package/@perkoxofficial/react-native-sdk)
 [![platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-blue.svg?style=flat-square)](https://reactnative.dev/)
 
-Official React Native SDK (iOS & Android) for integrating the **Perkox Offerwall** into mobile applications.
+Official React Native SDK for integrating the **Perkox Offerwall** into iOS and Android applications. Allow your users to earn rewards by completing offers, surveys, and engagement tasks.
 
 ---
 
-## ⚡ Features
+## Requirements
 
-- 📱 **Native Core**: Direct bridge wrapper surrounding the official native Android (Kotlin) and iOS (Swift) Perkox SDKs.
-- ⚡ **Auto-Linking**: Works out-of-the-box with React Native CLI auto-linking and CocoaPods.
-- 🔔 **Real-Time Events**: Listen to reward notifications (`onReward`) and offerwall dismissals (`onClose`).
-- 🔷 **TypeScript Ready**: Complete type definitions included out of the box.
+| Requirement | Supported Version |
+| :--- | :--- |
+| **React Native** | `0.60.0+` (New Architecture & Paper supported) |
+| **Expo** | Bare React Native or Expo Dev Client / Prebuild (`expo-build-properties`) |
+| **iOS Deployment Target** | `13.0+` |
+| **Android minSdk** | `21` (Android 5.0 Lollipop) or higher |
+| **Android targetSdk** | `36` (Android 15 ready) |
 
 ---
 
-## 📦 Installation
+## Installation
+
+Install the SDK using your preferred package manager:
 
 ```bash
 # Using NPM
@@ -32,55 +37,74 @@ pnpm add @perkoxofficial/react-native-sdk
 
 ---
 
-## ⚙️ Native Platform Configuration
+## Platform Setup
 
-### iOS Setup (CocoaPods)
-After installing the package, run CocoaPods installation inside your project's `ios` directory:
+### 🍎 iOS Setup
+
+After installing the package, install the required CocoaPods dependencies:
 
 ```bash
 cd ios && pod install && cd ..
 ```
-*Requirements: iOS deployment target 13.0 or higher.*
 
-### Android Setup
-React Native auto-linking configures the native Android module automatically.
-
-*Requirements:*
-1. Android API level 21 (Android 5.0) or higher (compiled with `compileSdkVersion 36` / `targetSdkVersion 36`).
-2. Ensure `<uses-permission android:name="android.permission.INTERNET" />` is present in your `AndroidManifest.xml`.
-3. Add `maven { url 'https://www.jitpack.io' }` to your root project's `android/build.gradle` (under `allprojects.repositories`) or `android/settings.gradle`.
+> **Privacy Manifest:** The SDK includes Apple's mandatory `PrivacyInfo.xcprivacy` manifest automatically. No manual privacy configuration is required.
 
 ---
 
-## 🚀 Quick Start
+### 🤖 Android Setup
+
+1. **Permissions:**
+   The `INTERNET` and `ACCESS_NETWORK_STATE` permissions are included automatically via Android Manifest merging:
+   ```xml
+   <uses-permission android:name="android.permission.INTERNET" />
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+   ```
+
+2. **JitPack Repository:**
+   Ensure `maven { url 'https://www.jitpack.io' }` is included in your project's `android/build.gradle` (or `settings.gradle`):
+   ```groovy
+   allprojects {
+       repositories {
+           google()
+           mavenCentral()
+           maven { url 'https://www.jitpack.io' }
+       }
+   }
+   ```
+
+---
+
+## Quick Start
+
+### Basic Implementation
 
 ```tsx
 import React, { useEffect } from 'react';
-import { Button, View, Alert } from 'react-native';
+import { View, Button, Alert } from 'react-native';
 import { PerkoxSDK, PerkoxReward } from '@perkoxofficial/react-native-sdk';
 
 export default function App() {
   useEffect(() => {
-    // 1. Initialize Perkox SDK
+    // 1. Initialize the Perkox SDK
     PerkoxSDK.init({
-      appId: "YOUR_APP_ID",
-      sdkKey: "YOUR_SDK_KEY",
-      playerId: "USER_12345",
-      beta: false, // Set to true for testing
+      appId: "YOUR_APP_ID",       // Your App ID from Perkox Dashboard
+      sdkKey: "YOUR_SDK_KEY",     // Your SDK Key from Perkox Dashboard
+      playerId: "Player_123",     // Unique player / user identifier
+      beta: false,                // Set to true to test with sandbox backend
     });
 
-    // 2. Listen to Reward Events
+    // 2. Listen to Reward events
     const unsubscribeReward = PerkoxSDK.onReward((reward: PerkoxReward) => {
-      console.log("Reward Received:", reward);
-      Alert.alert("Reward Earned", `Received ${reward.amount} points! (TxID: ${reward.txid})`);
+      console.log('Reward received:', reward);
+      Alert.alert('Reward', `Received ${reward.amount} coins!`);
     });
 
-    // 3. Listen to Offerwall Close Event
+    // 3. Listen to Offerwall Close events
     const unsubscribeClose = PerkoxSDK.onClose(() => {
-      console.log("Offerwall Closed");
+      console.log('Offerwall closed');
     });
 
-    // 4. Clean up listeners on unmount
+    // Clean up listeners on unmount
     return () => {
       unsubscribeReward();
       unsubscribeClose();
@@ -90,44 +114,79 @@ export default function App() {
   const handleShowOfferwall = async () => {
     const success = await PerkoxSDK.showOfferwall();
     if (!success) {
-      Alert.alert("Error", "Failed to launch Perkox Offerwall.");
+      Alert.alert('Error', 'Failed to launch Perkox Offerwall.');
     }
   };
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title="Open Perkox Offerwall" onPress={handleShowOfferwall} />
+      <Button title="Open Offerwall" onPress={handleShowOfferwall} />
     </View>
   );
 }
 ```
 
-## ⚠️ Important Requirements
+---
 
-1. **Package ID / Bundle Identifier Matching**:
-   The native Android `package` name (in `app.json` or `build.gradle`) and iOS `bundleIdentifier` **MUST** match the exact Package Name registered for your `App ID` in the [Perkox Publisher Dashboard](https://pub.perkox.com).
-   *If the package name does not match, the Offerwall will open but return zero offers (`Invalid package_id`).*
+## API Reference
 
-2. **Non-Empty `playerId`**:
-   Ensure `playerId` is a valid non-empty string identifying the user before calling `showOfferwall()`.
+### `PerkoxSDK` (Static API)
+
+| Method | Parameters | Returns | Description |
+| :--- | :--- | :--- | :--- |
+| `init(config)` | `PerkoxInitConfig` | `Promise<boolean>` | Initializes the SDK with global configuration. |
+| `showOfferwall(options?)` | `PerkoxInitConfig?` | `Promise<boolean>` | Launches the native Offerwall modal. |
+| `setUserId(userId)` | `string` | `Promise<boolean>` | Updates the active player / user identifier dynamically. |
+| `onReward(callback)` | `(reward: PerkoxReward) => void` | `() => void` | Registers a listener for reward events. Returns an unsubscribe function. |
+| `onClose(callback)` | `() => void` | `() => void` | Registers a listener for Offerwall dismiss events. Returns an unsubscribe function. |
 
 ---
 
-## 📖 API Summary
+### `PerkoxInitConfig`
 
-- **`PerkoxSDK.init(config)`** — Initialize SDK (`appId`, `sdkKey`, `playerId?`, `beta?`)
-- **`PerkoxSDK.showOfferwall(options?)`** — Launch native Offerwall UI (`appId?`, `sdkKey?`, `playerId?`, `beta?`)
-- **`PerkoxSDK.onReward(cb)`** — Listen to reward events (`reward.amount`, `reward.txid`, `reward.status`)
-- **`PerkoxSDK.onClose(cb)`** — Listen to Offerwall close event
-- **`PerkoxSDK.setUserId(id)`** — Dynamically update user/player ID
+| Field | Type | Required | Description |
+| :--- | :--- | :---: | :--- |
+| `appId` | `string` | **Yes** | Your unique App ID from the Perkox Publisher Dashboard. |
+| `sdkKey` | `string` | **Yes** | Your SDK Key from the Perkox Publisher Dashboard. |
+| `playerId` | `string` | **Yes** | Unique identifier for the user (cannot be empty). |
+| `beta` | `boolean` | No | When `true`, routes to the beta sandbox environment (`beta.perkwall.com`). |
+
+---
+
+### `PerkoxReward`
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `amount` | `number` | The reward amount / currency credited. |
+| `txid` | `string` | Unique transaction ID for the reward. |
+| `status` | `string` | Reward transaction status (`completed`, etc.). |
+
+---
+
+## ⚠️ Important Requirements
+
+### 1. Package ID / Bundle Identifier Matching
+The Android `package` name (e.g. `com.example.myapp`) and iOS `bundleIdentifier` **MUST** match the exact Package ID registered for your `App ID` in the [Perkox Publisher Dashboard](https://pub.perkox.com).
+
+> If the Package ID does not match, the Offerwall API returns:
+> `{"success": false, "message": "Invalid package_id for this offerwall"}`
+> causing zero offers to be shown.
+
+### 2. Server-Side Postbacks for Secure Rewards
+> ⚠️ **Important:** Do **not** rely exclusively on client-side `onReward` callbacks to grant high-value rewards, as client callbacks only execute while the app is active. Always configure **Server Postbacks** or **Webhooks** in the Perkox Dashboard for reliable, server-to-server reward crediting.
 
 ---
 
 ## ❓ Troubleshooting
 
-- **Offerwall opens but shows no offers?**
-  Verify that your Android `package` / iOS `bundleIdentifier` matches the registered Package ID in the Perkox Dashboard for your `appId`.
-- **Expo Go compatibility?**
-  Perkox SDK includes native Kotlin and Swift binary modules. Expo Go is not supported; use Expo Prebuild / Development Builds (`npx expo run:android` / `npx expo run:ios`).
+| Issue | Solution |
+| :--- | :--- |
+| **Offerwall opens but shows 0 offers** | Verify that your Android `applicationId` / iOS `bundleIdentifier` exactly matches the registered Package ID in the Perkox Dashboard. |
+| **Expo Go Error** | Custom native modules cannot run inside standard Expo Go. Use Expo Prebuild (`npx expo run:android` / `npx expo run:ios`) or Expo Dev Client. |
+| **Invalid player_id** | Ensure `playerId` is not an empty string (`""`). Pass a non-empty user ID during `PerkoxSDK.init()`. |
 
+---
 
+## License
+
+MIT © [Perkox](https://perkox.com)
