@@ -1,7 +1,7 @@
 # Perkox Offerwall SDK for React Native
 
-[![npm version](https://img.shields.io/npm/v/perkox-react-native-sdk.svg?style=flat-square)](https://www.npmjs.com/package/perkox-react-native-sdk)
-[![license](https://img.shields.io/npm/l/perkox-react-native-sdk.svg?style=flat-square)](https://www.npmjs.com/package/perkox-react-native-sdk)
+[![npm version](https://img.shields.io/npm/v/@perkoxofficial/react-native-sdk.svg?style=flat-square)](https://www.npmjs.com/package/@perkoxofficial/react-native-sdk)
+[![license](https://img.shields.io/npm/l/@perkoxofficial/react-native-sdk.svg?style=flat-square)](https://www.npmjs.com/package/@perkoxofficial/react-native-sdk)
 [![platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-blue.svg?style=flat-square)](https://reactnative.dev/)
 
 Official React Native SDK for integrating the **Perkox Offerwall** into iOS and Android applications. Allow your users to earn rewards by completing offers, surveys, and engagement tasks.
@@ -26,13 +26,13 @@ Install the SDK using your preferred package manager:
 
 ```bash
 # Using NPM
-npm install perkox-react-native-sdk
+npm install @perkoxofficial/react-native-sdk
 
 # Using Yarn
-yarn add perkox-react-native-sdk
+yarn add @perkoxofficial/react-native-sdk
 
 # Using PNPM
-pnpm add perkox-react-native-sdk
+pnpm add @perkoxofficial/react-native-sdk
 ```
 
 ---
@@ -81,7 +81,7 @@ cd ios && pod install && cd ..
 ```tsx
 import React, { useEffect } from 'react';
 import { View, Button, Alert } from 'react-native';
-import { PerkoxSDK, PerkoxReward } from 'perkox-react-native-sdk';
+import { PerkoxSDK, PerkoxReward } from '@perkoxofficial/react-native-sdk';
 
 export default function App() {
   useEffect(() => {
