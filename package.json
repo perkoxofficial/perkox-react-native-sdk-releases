@@ -1,0 +1,48 @@
+{
+  "name": "@perkoxofficial/react-native-sdk",
+  "version": "1.0.8",
+  "description": "Perkox Offerwall SDK for React Native (iOS & Android)",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android/build.gradle",
+    "android/src",
+    "android/libs",
+    "ios",
+    "PerkoxReactNativeSdk.podspec",
+    "README.md",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "sync-native-sdks": "node scripts/sync-native-sdks.js",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "perkox",
+    "offerwall",
+    "rewards",
+    "monetization",
+    "sdk"
+  ],
+  "author": "Perkox <support@perkox.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.72.0",
+    "typescript": "^5.1.0"
+  }
+}

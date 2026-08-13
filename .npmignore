@@ -1,0 +1,10 @@
+android/.gradle/
+android/build/
+android/.classpath
+android/.project
+android/.settings/
+ios/Pods/
+ios/build/
+*.tgz
+*.log
+.DS_Store
