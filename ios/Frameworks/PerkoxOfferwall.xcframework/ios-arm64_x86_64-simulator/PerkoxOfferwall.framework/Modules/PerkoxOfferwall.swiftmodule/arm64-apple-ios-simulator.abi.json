@@ -913,7 +913,7 @@
       "kind": "StringLiteral",
       "offset": 189,
       "length": 7,
-      "value": "\"2.0.5\""
+      "value": "\"2.0.6\""
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/Offerwall.swift",
