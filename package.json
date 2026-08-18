@@ -1,6 +1,6 @@
 {
   "name": "@perkoxofficial/react-native-sdk",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Perkox Offerwall SDK for React Native (iOS & Android)",
   "main": "lib/index.js",
   "module": "lib/index.js",
