@@ -913,7 +913,7 @@
       "kind": "StringLiteral",
       "offset": 189,
       "length": 7,
-      "value": "\"2.0.8\""
+      "value": "\"2.0.9\""
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/Offerwall.swift",
@@ -1044,84 +1044,84 @@
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 2065,
+      "offset": 2045,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 2144,
+      "offset": 2124,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 2352,
+      "offset": 2332,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 2385,
+      "offset": 2365,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2460,
+      "offset": 2440,
       "length": 2,
       "value": "13"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2463,
+      "offset": 2443,
       "length": 3,
       "value": "255"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2475,
+      "offset": 2455,
       "length": 2,
       "value": "13"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2478,
+      "offset": 2458,
       "length": 3,
       "value": "255"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2489,
+      "offset": 2469,
       "length": 2,
       "value": "13"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 2492,
+      "offset": 2472,
       "length": 3,
       "value": "255"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "FloatLiteral",
-      "offset": 2504,
+      "offset": 2484,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/shanto\/Projects\/Perkox\/perkox-ios-sdk\/Sources\/PerkoxOfferwall\/OfferwallViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 2536,
+      "offset": 2516,
       "length": 5,
       "value": "false"
     },
