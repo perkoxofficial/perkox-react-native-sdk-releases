@@ -12,15 +12,16 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "13.0" }
   s.source       = { :git => "https://github.com/perkoxofficial/perkox-react-native-sdk.git", :tag => "#{s.version}" }
 
-  s.source_files = "ios/**/*.{h,m,mm,swift}"
+  s.source_files = "ios/*.{h,m,mm,swift}"
+  s.exclude_files = "ios/Frameworks/**/*"
   s.requires_arc = true
 
   s.dependency "React-Core"
 
   # Link prebuilt PerkoxiOSSDK framework if placed in ios/Frameworks/
-  s.vendored_frameworks = "ios/Frameworks/*.xcframework", "ios/Frameworks/*.framework"
+  s.vendored_frameworks = "ios/Frameworks/PerkoxOfferwall.xcframework"
   s.preserve_paths = "ios/Frameworks/*"
 
-  # Optional: Link to native Perkox iOS SDK when published on CocoaPods or vendored in ios/Frameworks/
-  # s.dependency "PerkoxiOSSDK"
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
+  s.swift_version = "5.0"
 end
