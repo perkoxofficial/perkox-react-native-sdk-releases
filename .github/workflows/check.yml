@@ -1,0 +1,60 @@
+# A release repo has one job: ship an artifact that matches what the manifest
+# claims. The characteristic failure is not a crash — it is drift. package.json
+# says 2.0.12 while the tarball on disk is 2.0.11, and consumers install a
+# version that does not contain what the release notes describe.
+#
+# Nothing about that is visible. The publish succeeds, the repo looks tidy, and
+# the mismatch only surfaces as a bug report that makes no sense.
+#
+# So this checks the things that must agree, and nothing else.
+
+name: Check
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: The manifest, the tarball and the entry point must agree
+        run: |
+          python3 - <<'PY'
+          import json, os, glob, sys, tarfile
+          pkg = json.load(open('package.json'))
+          name, ver = pkg['name'], pkg['version']
+          fail = []
+          print(f"manifest: {name}@{ver}")
+
+          expected = name.replace('@','').replace('/','-') + f"-{ver}.tgz"
+          tarballs = glob.glob('*.tgz')
+          print(f"tarballs present: {tarballs or 'none'}")
+          if tarballs and expected not in tarballs:
+              fail.append(f"package.json says {ver}, but the tarball is {tarballs[0]} (expected {expected})")
+
+          entry = pkg.get('main')
+          if entry and not os.path.exists(entry):
+              fail.append(f"main entry point '{entry}' does not exist in the repo")
+
+          for t in tarballs:
+              try:
+                  tarfile.open(t).getmembers()
+              except Exception as e:
+                  fail.append(f"{t} is not a readable tar archive: {e}")
+
+          if fail:
+              for f in fail: print("::error::" + f)
+              sys.exit(1)
+          print("manifest, artifact and entry point all agree")
+          PY
+
+      - name: npm must be able to pack it
+        run: npm pack --dry-run
