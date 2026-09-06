@@ -1,0 +1,24 @@
+# Android build outputs & caches
+android/.gradle/
+android/build/
+android/app/build/
+.gradle/
+build/
+
+# iOS build outputs
+ios/Pods/
+ios/build/
+ios/Pods.xcodeproj/
+
+# Dependencies & logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS & Editor files
+.DS_Store
+.vscode/
+.idea/
+*.log
+.agents/
