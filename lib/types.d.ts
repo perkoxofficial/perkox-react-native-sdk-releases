@@ -1,11 +1,12 @@
 export interface PerkoxReward {
-    amount: number;
-    txid: string;
-    status: string;
-    publisher_id: number;
-    player_id: string;
-    timestamp: number;
+    amount?: number;
+    txid?: string;
+    status?: string;
+    publisher_id?: number;
+    player_id?: string;
+    timestamp?: number;
     type?: string;
+    [key: string]: any;
 }
 export interface PerkoxInitConfig {
     appId: string;
