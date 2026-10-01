@@ -136,31 +136,47 @@ export default function App() {
 | Method | Parameters | Returns | Description |
 | :--- | :--- | :--- | :--- |
 | `init(config)` | `PerkoxInitConfig` | `Promise<boolean>` | Initializes the SDK with global configuration. |
-| `showOfferwall(options?)` | `PerkoxInitConfig?` | `Promise<boolean>` | Launches the native Offerwall modal. |
+| `showOfferwall(options?)` | `PerkoxInitConfig?` | `Promise<boolean>` | Launches the native Offerwall modal and automatically syncs pending rewards. |
+| `syncPendingRewards(appId?, sdkKey?, playerId?, beta?)` | `string?, string?, string?, boolean?` | `Promise<PerkoxReward[]>` | Explicitly synchronizes pending rewards earned while the app was closed. |
 | `setUserId(userId)` | `string` | `Promise<boolean>` | Updates the active player / user identifier dynamically. |
 | `onReward(callback)` | `(reward: PerkoxReward) => void` | `() => void` | Registers a listener for reward events. Returns an unsubscribe function. |
 | `onClose(callback)` | `() => void` | `() => void` | Registers a listener for Offerwall dismiss events. Returns an unsubscribe function. |
 
 ---
 
-### `PerkoxInitConfig`
+### ⚡ Offline & Pending Rewards Auto-Sync
 
-| Field | Type | Required | Description |
-| :--- | :--- | :---: | :--- |
-| `appId` | `string` | **Yes** | Your unique App ID from the Perkox Publisher Dashboard. |
-| `sdkKey` | `string` | **Yes** | Your SDK Key from the Perkox Publisher Dashboard. |
-| `playerId` | `string` | **Yes** | Unique identifier for the user (cannot be empty). |
-| `beta` | `boolean` | No | When `true`, routes to the beta sandbox environment (`beta.perkwall.com`). |
+When a user completes an offer while your mobile application is closed, suspended, or in the background, rewards are **automatically retained and synchronized**:
+
+1. **Auto-Sync on Launch:** Whenever `showOfferwall()` is called, pending rewards are automatically fetched and passed to your `onReward` listeners on the Main Thread.
+2. **Explicit Background Sync:** You can also sync rewards in `useEffect` on app startup without showing the UI:
+
+```typescript
+useEffect(() => {
+  // Sync pending rewards on startup
+  PerkoxSDK.syncPendingRewards().then((unclaimedRewards) => {
+    unclaimedRewards.forEach((r) => {
+      console.log(`Synced offline reward: ${r.amount} (TxID: ${r.txid}, Click: ${r.click_id})`);
+    });
+  });
+}, []);
+```
 
 ---
 
-### `PerkoxReward`
+### `PerkoxReward` (Dynamic Payload)
+
+All server and custom postback parameters are dynamically preserved and typed with an index signature:
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `amount` | `number` | The reward amount / currency credited. |
+| `amount` / `payout` | `number` | The reward amount / currency credited. |
 | `txid` | `string` | Unique transaction ID for the reward. |
-| `status` | `string` | Reward transaction status (`completed`, etc.). |
+| `status` | `string` | Reward transaction status (`approved`, etc.). |
+| `player_id` | `string` | The user / player identifier. |
+| `click_id` | `string` | The conversion click ID (dynamic). |
+| `offer_id` | `any` | Completed offer ID (dynamic). |
+| `[key: string]` | `any` | All other custom server / advertiser macros preserved dynamically. |
 
 ---
 
@@ -173,8 +189,8 @@ The Android `package` name (e.g. `com.example.myapp`) and iOS `bundleIdentifier`
 > `{"success": false, "message": "Invalid package_id for this offerwall"}`
 > causing zero offers to be shown.
 
-### 2. Server-Side Postbacks for Secure Rewards
-> ⚠️ **Important:** Do **not** rely exclusively on client-side `onReward` callbacks to grant high-value rewards, as client callbacks only execute while the app is active. Always configure **Server Postbacks** or **Webhooks** in the Perkox Dashboard for reliable, server-to-server reward crediting.
+### 2. Anti-Duplicate Claim Acknowledgment
+The SDK automatically acknowledges claimed reward transaction IDs to `POST /rewards/claim`. This guarantees idempotent delivery and eliminates duplicate reward crediting across application restarts.
 
 ---
 
