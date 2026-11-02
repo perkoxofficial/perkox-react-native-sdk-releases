@@ -1,0 +1,5 @@
+{
+  "image": "alpine:3.20",
+  "command": "test -f perkoxofficial-react-native-sdk-2.0.20.tgz && tar tzf perkoxofficial-react-native-sdk-2.0.20.tgz >/dev/null && echo 'npm tarball intact'",
+  "why": "Release artifact repo: verify the published npm tarball is a readable archive."
+}
