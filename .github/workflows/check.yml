@@ -16,6 +16,9 @@
 # rebuilding it is somebody else's.
 
 name: Check
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   push:
