@@ -207,3 +207,9 @@ The SDK automatically acknowledges claimed reward transaction IDs to `POST /rewa
 ## License
 
 MIT © [Perkox](https://perkox.com)
+
+
+## CI
+
+This repo requires a green **`ovh-ci`** check (self-hosted CI on OVH + Mac Mini)
+before a PR can merge. No GitHub Actions. See the org `CONTRIBUTING.md`.
